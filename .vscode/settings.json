@@ -1,0 +1,11 @@
+{
+    "files.exclude": {
+        ".history": true
+    },
+    "eslint.autoFixOnSave": true,
+    "debug.node.autoAttach": "off",
+    "editor.tabSize": 2,
+    "editor.autoIndent": true,
+    "workbench.panel.defaultLocation": "right",
+    "liveServer.settings.port": 5501
+}
