@@ -1,14 +1,21 @@
 // Grab the articles as a json
-$.getJSON('/api/articles', function(data) {
-  // For each one
-  for (let i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $('#articles').append(`
-    <p style="cursor:pointer" data-id="${data[i]._id}">${data[i].title}<br />
-    <a href="${data[i].link}" target="_blank">&#9758;</a>
-    </p>
-    `);
-  }
+$(window).on('load', () => {
+  $.getJSON('/scrape');
+});
+
+$('#getarts').on('click', () => {
+  $.getJSON('/api/articles', function(data) {
+    // For each one
+    for (let i = 0; i < data.length; i++) {
+      // Display the apropos information on the page
+      const vDiv = $('');
+      $('#articles').append(`${data[i]._id} ${data[i].title} ${data[i].link}`);
+    }
+  });
+});
+
+$('#scrape').on('click', () => {
+
 });
 
 
@@ -74,3 +81,22 @@ $(document).on('click', '#savenote', function() {
   $('#titleinput').val('');
   $('#bodyinput').val('');
 });
+
+function renderCards() {
+  data.forEach(() => {
+    const vDiv = $('<div>');
+    vDiv.addClass('row justify-content-center');
+    const vDiv2 = $('<div>');
+    vDiv2.addClass('col-1');
+    const vDiv3 = $('<div>');
+    vDiv3.addClass('card col-md-7');
+    const vH5 = $('<h5>');
+    vH5.addClass('card-header');
+    vH5.attr('id', 'articles');
+    const vDiv4 = $('<div>');
+    vDiv4.addClass('card-body');
+    const vH52 = $('<h5>');
+    vH52.addClass('card-title');
+    vH52.attr('id', 'title');
+  });
+}
