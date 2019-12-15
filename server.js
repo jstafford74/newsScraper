@@ -26,20 +26,24 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static('public'));
 
+// Handlebars Connection //
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
 // Connect to the Mongo DB
-mongoose.connect('mongodb://localhost/unit18Populater', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+mongoose.connect('mongodb://localhost/newsScraper', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 
 // Routes
 
 // A GET route for scraping the echoJS website
 app.get('/scrape', async function(req, res) {
   // First, we grab the body of the html with axios
-  const response = await axios.get('http://www.echojs.com/');
+  const response = await axios.get('http://www.zerohedge.com');
   // Then, we load that into cheerio and save it to $ for a shorthand selector
   const $ = cheerio.load(response.data);
 
   // Now, we grab every h2 within an article tag, and do the following:
-  $('article h2').each(function(i, element) {
+  $('.teaser-title').each(function(i, element) {
     // Save an empty result object
     const result = {};
 
