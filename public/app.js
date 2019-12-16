@@ -82,10 +82,10 @@ function makeRows(data) {
     $('#main').append(`
     <div class="row">
       
-      <div class="card col-7">
-        <div class="card-header">${data[i].title}</div>
-        <div class="card-body">
-          <h5 class="card-title">
+      <div class="card col-7 mb-4">
+        <div class="card-header h5 text-left ">${data[i].title}</div>
+        <div class="card-body border border-warning">
+          <h5 class="card-title text-left">
             ${data[i].title}
           </h5>
           <p class="card-text">Text goes here</p>
