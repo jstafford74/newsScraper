@@ -15,9 +15,9 @@ $('#getarts').on('click', async () => {
 
 
 // Whenever someone clicks a p tag
-$(document).on('click', 'p', function() {
+$(document).on('click', '#linkbtn', function() {
   // Empty the notes from the note section
-  $('#notes').empty();
+  // $('#notes').empty();
   // Save the id from the p tag
   const thisId = $(this).attr('data-id');
 
@@ -86,12 +86,21 @@ function makeRows(data) {
         <div class="card-header h5 text-left ">${data[i].title}</div>
         <div class="card-body border border-warning">
           <h5 class="card-title text-left">
-            ${data[i].title}
+            ${data[i].text}
           </h5>
-          <p class="card-text">Text goes here</p>
-          <a href=${data[i].link}><button class="btn btn-danger">Link to Note</button></a> 
+          <a href="www.zerohedge.com${data[i].link}"><button class="btn btn-danger">Link to Article</button></a> 
+          <a id="linkbtn" data-id="${data[i].id}" href="#"><button class="btn btn-success">Link to Note</button></a> 
         </div>
       </div>
+      <div class=".d-none card col-5 mb-4">
+        <div class="card-header h5 text-left ">Article Note</div>
+          <input id="titleinput+${data[i].id}" name="title">
+          <textarea id="bodyinput" name="body">
+          </textarea>
+          <a href="#titleinput+${data[i].id}" class="btn btn-primary" id="save-note" data-id="${data[i].id}">Save Note<a>
+        </div>
+      </div>
+
     </div>`);
   }
 }

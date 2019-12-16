@@ -45,17 +45,16 @@ app.get('/scrape', async function(req, res) {
   const $ = cheerio.load(response.data);
 
 
-
-  $('article h2').each(function(i, el) {
+  $('article').each(function(i, el) {
     const result = {};
-    result.title = $(this).children('a').children('span').text();
-
-    result.link = $(this).children('a')
+    result.title = $(this).children('h2').children('a').children('span').text();
+    result.text = $(this).children('section').children('div').children('div').children('p').text();
+    console.log(result.text);
+    result.link = $(this).children('h2').children('a')
         .attr('href');
 
 
-
-    db.Article.updateMany(result, {upsert: true})
+    db.Article.create(result, {upsert: true})
         .then(function(dbArticle) {
           console.log(dbArticle);
         })
