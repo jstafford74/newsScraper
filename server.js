@@ -32,7 +32,8 @@ app.use(express.static('public'));
 // app.set('view engine', 'handlebars');
 
 // Connect to the Mongo DB
-mongoose.connect('mongodb://localhost/newsScraper', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/newsScraper';
+mongoose.connect(MONGODB_URI);
 
 // Routes
 
