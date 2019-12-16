@@ -1,5 +1,5 @@
 const express = require('express');
-const exphbs = require('express-handlebars');
+// const exphbs = require('express-handlebars');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 
@@ -28,8 +28,8 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Handlebars Connection //
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+// app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+// app.set('view engine', 'handlebars');
 
 // Connect to the Mongo DB
 mongoose.connect('mongodb://localhost/newsScraper', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
@@ -72,7 +72,7 @@ app.get('/api/articles', async function(req, res) {
   // TODO: Finish the route so it grabs all of the articles
   try {
     const data = await db.Article.find({});
-
+    console.log(data);
     res.json(data);
   } catch (err) {
     res.status(500).json({error: {name: err.name, message: err.message}});
