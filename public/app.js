@@ -1,22 +1,16 @@
 // Grab the articles as a json
-$(window).on('load', () => {
-  $.getJSON('/scrape');
+
+
+$('#getarts').on('click', async () => {
+  $('#main').empty();
+  try {
+    await $.getJSON('/api/articles').then((data) => renderCards(data));
+  } catch (error) {
+    console.log('article error');
+  }
 });
 
-$('#getarts').on('click', () => {
-  $.getJSON('/api/articles', function(data) {
-    // For each one
-    for (let i = 0; i < data.length; i++) {
-      // Display the apropos information on the page
-      const vDiv = $('');
-      $('#articles').append(`${data[i]._id} ${data[i].title} ${data[i].link}`);
-    }
-  });
-});
 
-$('#scrape').on('click', () => {
-
-});
 
 
 // Whenever someone clicks a p tag
@@ -82,21 +76,45 @@ $(document).on('click', '#savenote', function() {
   $('#bodyinput').val('');
 });
 
-function renderCards() {
-  data.forEach(() => {
+function renderCards(data) {
+  console.log(data);
+  const main = document.getElementById('main');
+  for (let i = 0; i < data.length; i++) {
     const vDiv = $('<div>');
     vDiv.addClass('row justify-content-center');
+    main.append(vDiv);
     const vDiv2 = $('<div>');
     vDiv2.addClass('col-1');
+    vDiv.append(vDiv2);
+
     const vDiv3 = $('<div>');
     vDiv3.addClass('card col-md-7');
+    vDiv2.append(vDiv3);
+
     const vH5 = $('<h5>');
     vH5.addClass('card-header');
     vH5.attr('id', 'articles');
+    vH5.text(data[i].title);
+    vDiv3.append(vH5);
+
     const vDiv4 = $('<div>');
     vDiv4.addClass('card-body');
+    vDiv3.append(vDiv4);
     const vH52 = $('<h5>');
     vH52.addClass('card-title');
     vH52.attr('id', 'title');
-  });
+    vDiv4.append(vH52);
+    const ahref = $('<a>');
+    ahref.attr('target', '_blank');
+    ahref.attr('href', data[i].link);
+    ahref.addClass('btn btn-success');
+    ahref.text('Link to Article');
+    vH52.append(ahref);
+    const ahref2 = $('<a>');
+    ahref2.attr('target', '_blank');
+    ahref2.attr('href', '/api/articles/' + data[i].id);
+    ahref2.addClass('btn btn-danger');
+    ahref2.text('Link to Note');
+    vH52.append(ahref2);
+  }
 }

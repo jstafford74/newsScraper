@@ -44,28 +44,29 @@ app.get('/scrape', async function(req, res) {
 
   const $ = cheerio.load(response.data);
 
-  result = {};
 
-  $('h2.teaser-title').each(function(i, el) {
+
+  $('article h2').each(function(i, el) {
+    const result = {};
     result.title = $(this).children('a').children('span').text();
 
     result.link = $(this).children('a')
         .attr('href');
+
+
+
+    db.Article.updateMany(result, {upsert: true})
+        .then(function(dbArticle) {
+          console.log(dbArticle);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
   });
-  console.log(result);
-  // db.Article.updateMany(result, {upsert: true})
-  //     .then(function(dbArticle) {
-  //       console.log(dbArticle);
-  //     })
-  //     .catch(function(err) {
-  //       console.log(err);
-  //     });
-  // });
 
   // Send a message to the client
   res.send('Scrape Complete');
 });
-
 // Route for getting all Articles from the db
 app.get('/api/articles', async function(req, res) {
   // TODO: Finish the route so it grabs all of the articles
